@@ -18,8 +18,7 @@ public class Task extends BaseEntity{
     private String description;
 
     @NotNull
-    @Positive
-    private Date dueDate;
+    private String dueDate;
 
     @NotNull
     @ManyToOne
@@ -36,11 +35,11 @@ public class Task extends BaseEntity{
         this.description = description;
     }
 
-    public Date getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 

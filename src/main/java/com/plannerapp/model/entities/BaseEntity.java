@@ -1,6 +1,7 @@
 package com.plannerapp.model.entities;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.util.UUID;
@@ -9,14 +10,14 @@ import java.util.UUID;
 
 public class BaseEntity {
     @Id
-    @GeneratedValue(generator = "UUID")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

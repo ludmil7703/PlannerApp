@@ -2,10 +2,7 @@ package com.plannerapp.model.entities;
 
 import com.plannerapp.model.enums.PriorityName;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +11,13 @@ import java.util.List;
 public class Priority extends BaseEntity{
 
     @Column(name = "priority_name", nullable = false, unique = true)
+    @Enumerated(EnumType.STRING)
     private PriorityName priorityName;
 
     @Column(name = "description", nullable = false)
     private String description;
 
-    @OneToMany(mappedBy = "priority")
+    @OneToMany(mappedBy = "priority", fetch = FetchType.EAGER)
     private List<Task> tasks;
 
     public Priority() {
@@ -32,14 +30,25 @@ public class Priority extends BaseEntity{
 
     public void setPriorityName(PriorityName priorityName) {
         this.priorityName = priorityName;
+        this.setDescription(priorityName);
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(PriorityName priorityName) {
+        switch (priorityName){
+            case URGENT:
+                this.description = "An urgent problem that blocks the system use until the issue is resolved.";
+                break;
+            case IMPORTANT:
+                this.description = "A Core functionality that your product is explicitly supposed to perform is compromised.";
+                break;
+            case LOW:
+                this.description = "Should be fixed if time permits but can be postponed.";
+                break;
+        }
     }
 
     public List<Task> getTasks() {
