@@ -1,14 +1,16 @@
 package com.plannerapp.controllers;
 
 import com.plannerapp.model.TaskAddBindingModel;
-import com.plannerapp.services.LoggedUser;
+import com.plannerapp.util.LoggedUser;
 import com.plannerapp.services.TaskService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/tasks")
@@ -23,22 +25,31 @@ public class TaskController {
     }
 
     @GetMapping("/add")
-    public ModelAndView add(){
+    public ModelAndView add(Model model){
         if(!loggedUser.isLogged()){
             return new ModelAndView("redirect:/login");
+        }
+        if (!model.containsAttribute("taskAddBindingModel")){
+            model.addAttribute("taskAddBindingModel", new TaskAddBindingModel());
         }
         return new ModelAndView("task-add");
     }
 
     @PostMapping("/add")
-    public ModelAndView add(TaskAddBindingModel taskAddBindingModel){
-        if(!loggedUser.isLogged()){
-            return new ModelAndView("redirect:/login");
-        }
+    public String add(@Valid @ModelAttribute("taskAddBindingModel") TaskAddBindingModel taskAddBindingModel
+            , BindingResult bindingResult,
+                            RedirectAttributes rAtt){
 
+
+        if (bindingResult.hasErrors()){
+            rAtt.addFlashAttribute("taskAddBindingModel", taskAddBindingModel);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.taskAddBindingModel", bindingResult);
+            return "redirect:/tasks/add";
+        }
         boolean isCreated =  taskService.create(taskAddBindingModel);
-        String view = isCreated ? "redirect:/home" : "redirect:/tasks/add";
-        return new ModelAndView(view);
+
+
+        return isCreated ? "redirect:/home" : "redirect:/tasks/add";
     }
 
     @GetMapping("/assign/{id}")

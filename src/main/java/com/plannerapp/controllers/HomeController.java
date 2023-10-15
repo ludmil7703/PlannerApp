@@ -1,7 +1,7 @@
 package com.plannerapp.controllers;
 
 import com.plannerapp.model.TaskHomeDTO;
-import com.plannerapp.services.LoggedUser;
+import com.plannerapp.util.LoggedUser;
 import com.plannerapp.services.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.plannerapp.services;
+package com.plannerapp.util;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;

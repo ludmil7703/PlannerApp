@@ -9,13 +9,12 @@ import com.plannerapp.model.entities.User;
 import com.plannerapp.repositories.PriorityRepository;
 import com.plannerapp.repositories.TaskRepository;
 import com.plannerapp.repositories.UserRepository;
-import com.plannerapp.services.LoggedUser;
+import com.plannerapp.util.LoggedUser;
 import com.plannerapp.services.TaskService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class TaskServiceImpl implements TaskService {

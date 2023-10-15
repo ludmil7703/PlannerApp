@@ -4,7 +4,7 @@ import com.plannerapp.model.UserLoginBindingModel;
 import com.plannerapp.model.UserRegisterBindingModel;
 import com.plannerapp.model.entities.User;
 import com.plannerapp.repositories.UserRepository;
-import com.plannerapp.services.LoggedUser;
+import com.plannerapp.util.LoggedUser;
 import com.plannerapp.services.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

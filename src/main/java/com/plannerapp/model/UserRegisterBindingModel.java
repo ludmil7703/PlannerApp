@@ -3,6 +3,7 @@ package com.plannerapp.model;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class UserRegisterBindingModel {
@@ -10,10 +11,12 @@ public class UserRegisterBindingModel {
     @Length(min = 3, max = 20, message = "Username length must be between 3 and 20 characters!")
     private String username;
     @Email
-    @NotNull(message = "Email cannot be null!")
+    @NotBlank(message = "Email cannot be null!")
     private String email;
     @Length(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
     private String password;
+    @Length(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
+
     private String confirmPassword;
 
     public String getUsername() {
