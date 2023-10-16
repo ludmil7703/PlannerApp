@@ -16,7 +16,7 @@
                         <table>
                             <tr>
                                 <td scope="row" style="width: 5%"><img class="mr-2 " src="/img/pin.png" alt="Pin" width="35px" height="35px"></td>
-                                <td style="width: 15%" th:text="${myTask.priority.getPriorityName()}">{priority}</td>
+                                <td style="width: 15%" th:text="${myTask.priority.name()}">{priority}</td>
                                 <td style="width: 40%" th:text="${myTask.dueDate}">{dueDate}</td>
                                 <td><a th:href="@{/tasks/delete/{id}(id=${myTask.id})}"><img src="/img/done-remove-button.png" height="35px"></a></td>
                                 <td><a th:href="@{/tasks/move/{id}(id=${myTask.id})}"><img src="/img/return.png" height="35px"></a></td>
@@ -39,7 +39,7 @@
                             <table>
                                 <tr>
                                     <td style="width: 5%"><img class="mr-2 " src="/img/pin.png" alt="Pin" width="35px" height="35px"></td>
-                                    <td style="width: 15%" th:text="${task.priority.getPriorityName()}"><a>{priority}</a></td>
+                                    <td style="width: 15%" th:text="${task.priority.name()}"><a>{priority}</a></td>
                                     <td th:text="'Due Date: ' + ${task.dueDate}"><a>Due Date: {dueDate}</a></td>
                                     <td><a class="ml-3" th:href="@{/tasks/assign/{id}(id=${task.id})}"><img src="/img/assign-to-me-button.png" height="35px"></a></td>
                                 </tr>
