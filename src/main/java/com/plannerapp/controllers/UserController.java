@@ -46,6 +46,15 @@ public class UserController {
             return "redirect:/login";
         }
 
+        boolean validCredentials = this.userService.checkCredentials(userLoginBindingModel.getUsername(), userLoginBindingModel.getPassword());
+
+        if (!validCredentials) {
+            rAtt
+                    .addFlashAttribute("userLoginBindingModel", userLoginBindingModel)
+                    .addFlashAttribute("validCredentials", false);
+            return "redirect:/login";
+        }
+
         userService.login(userLoginBindingModel);
 
         return "redirect:/home";
@@ -68,6 +77,12 @@ public class UserController {
     public String register(@Valid @ModelAttribute("userRegisterBindingModel") UserRegisterBindingModel userRegisterBindingModel
             ,BindingResult bindingResult,
                            RedirectAttributes rAtt){
+        if (!userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword())){
+            bindingResult.rejectValue("confirmPassword",
+                    "error.userRegisterBindingModel",
+                    "Passwords must be the same.");
+        }
+
         if (bindingResult.hasErrors()){
             rAtt.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel", bindingResult);
@@ -84,6 +99,11 @@ public class UserController {
     public ModelAndView logout(){
         userService.logout();
         return new ModelAndView("index");
+    }
+
+    @ModelAttribute
+    public void addAttribute(Model model) {
+        model.addAttribute("validCredentials");
     }
 
 

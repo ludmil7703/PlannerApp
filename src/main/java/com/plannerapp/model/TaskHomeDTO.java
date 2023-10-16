@@ -5,33 +5,34 @@ import java.util.List;
 
 public class TaskHomeDTO {
 
-    private List<TaskDTO> myTasks;
+    private List<TaskAddBindingModel> myTasks;
 
-    private List<TaskDTO> allOtherTasks;
+    private List<TaskAddBindingModel> allOtherTasks;
 
     private long totalOtherTasks;
 
 
 
-    public TaskHomeDTO(List<TaskDTO> myTasks, List<TaskDTO> allOtherTasks) {
+    public TaskHomeDTO(List<TaskAddBindingModel> myTasks, List<TaskAddBindingModel> allOtherTasks) {
         this.myTasks = new ArrayList<>(myTasks);
         this.allOtherTasks = new ArrayList<>(allOtherTasks);
         this.totalOtherTasks = allOtherTasks.size();
     }
 
-    public List<TaskDTO> getMyTasks() {
+
+    public List<TaskAddBindingModel> getMyTasks() {
         return myTasks;
     }
 
-    public void setMyTasks(List<TaskDTO> myTasks) {
+    public void setMyTasks(List<TaskAddBindingModel> myTasks) {
         this.myTasks = myTasks;
     }
 
-    public List<TaskDTO> getAllOtherTasks() {
+    public List<TaskAddBindingModel> getAllOtherTasks() {
         return allOtherTasks;
     }
 
-    public void setAllOtherTasks(List<TaskDTO> allOtherTasks) {
+    public void setAllOtherTasks(List<TaskAddBindingModel> allOtherTasks) {
         this.allOtherTasks = allOtherTasks;
     }
 

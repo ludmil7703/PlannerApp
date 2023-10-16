@@ -1,12 +1,16 @@
 package com.plannerapp.model.entities;
 
+import com.plannerapp.model.enums.PriorityName;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import java.util.Date;
 
@@ -18,7 +22,9 @@ public class Task extends BaseEntity{
     private String description;
 
     @NotNull
-    private String dueDate;
+    @FutureOrPresent(message = "Due date must be in future.")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dueDate;
 
     @NotNull
     @ManyToOne
@@ -35,11 +41,11 @@ public class Task extends BaseEntity{
         this.description = description;
     }
 
-    public String getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(String dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 

@@ -8,6 +8,9 @@ import com.plannerapp.util.LoggedUser;
 import com.plannerapp.services.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,6 +33,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
+
         String username = userRegisterBindingModel.getUsername();
         if (this.userRepository.findByUsername(username) != null
                 || this.userRepository.findUserByEmail(userRegisterBindingModel.getEmail()) != null
@@ -46,24 +50,12 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+
     @Override
-    public boolean login(UserLoginBindingModel userLoginBindingModel) {
-        if (userLoginBindingModel == null) {
-            return false;
-        }
-
-        String username = userLoginBindingModel.getUsername();
-        String password = userLoginBindingModel.getPassword();
-
-        User user = this.userRepository.findByUsername(username);
-
-        if (user != null && passwordEncoder.matches(password, user.getPassword())){
-            loggedUser.setUsername(username);
-            loggedUser.setLogged(true);
-            return true;
-        }
-
-        return false;
+    public void login(UserLoginBindingModel userLoginBindingModel) {
+        User user = this.userRepository.findByUsername(userLoginBindingModel.getUsername());
+        this.loggedUser.setId(user.getId());
+        this.loggedUser.setUsername(user.getUsername());
     }
 
     @Override
@@ -75,6 +67,36 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isLogged() {
         if (loggedUser.isLogged()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        User user = this.userRepository.findUserByEmail(email);
+
+        if (user != null) {
+            return user;
+        }
+        return null;
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        User user = this.userRepository.findByUsername(username);
+
+        if (user != null) {
+            return user;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean checkCredentials(String username, String password) {
+        User user = this.userRepository.findByUsername(username);
+
+        if (user != null && passwordEncoder.matches(password, user.getPassword())){
             return true;
         }
         return false;
