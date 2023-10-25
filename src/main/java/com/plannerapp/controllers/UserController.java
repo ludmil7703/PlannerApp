@@ -83,6 +83,17 @@ public class UserController {
                     "Passwords must be the same.");
         }
 
+        if(userService.findUserByEmail(userRegisterBindingModel.getEmail()) != null){
+            bindingResult.rejectValue("email",
+                    "error.userRegisterBindingModel",
+                    "Email already exists.");
+        }
+        if (userService.findUserByUsername(userRegisterBindingModel.getUsername()) != null){
+            bindingResult.rejectValue("username",
+                    "error.userRegisterBindingModel",
+                    "Username already exists.");
+        }
+
         if (bindingResult.hasErrors()){
             rAtt.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel", bindingResult);
