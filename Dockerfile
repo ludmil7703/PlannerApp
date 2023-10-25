@@ -4,4 +4,4 @@ WORKDIR /java
 COPY . /java
 RUN mvn package -Dmaven.test.skip=true
 EXPOSE 8080
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/java/target/myproject-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/java/target/PlannerApp-0.0.1-SNAPSHOT.jar"]
